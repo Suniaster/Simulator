@@ -1,0 +1,71 @@
+{
+  "listeners":{
+    "connection": {
+      "socket": "socket"
+    },
+    "disconnect":{
+      "":""
+    },
+    "jump":{
+      "":""
+    },
+    "game-start":{
+      "":""
+    }
+  },
+
+  "emitter":{
+
+    "sync-game":{
+      "time":"number",
+      "tickrate":"number",
+      "objects":"object_info[]",
+      "object_info":{
+        "id":"string",
+        "position":{
+          "x":"Number",
+          "y": "Number"
+        },
+        "vel":{
+          "x":"Number",
+          "y": "Number"
+        },
+        "accel":{
+          "x":"Number",
+          "y": "Number"
+        }
+      }
+    },
+
+    "game-start":{
+      "window":{
+        "width": "Number",
+        "heigth": "Number"
+      },
+      "birds":{
+        "ids": "String[]"
+      }
+    },
+
+    "objects-created":{
+      "objects": "objectinfoMessage[]"
+    },
+
+    "objects-destoyed":{
+      "ids": "String[]"
+    },
+
+    "playerDisconnected":{
+      "id": "String"
+    },
+
+    "game-end":{
+      "":""
+    },
+
+    "jump":{
+      "id": "string",
+      "vel_y": "number"
+    }
+  }
+}
