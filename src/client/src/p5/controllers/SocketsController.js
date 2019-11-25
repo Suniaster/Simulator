@@ -9,7 +9,6 @@ class SocketsController{
   startConnection(){
     this.socket = io();
 
-
     this.socket.on("game-start", (data)=>{
       this.gameController.menu.initGame();
     })
@@ -37,7 +36,6 @@ class SocketsController{
     this.socket.on("game-end", ()=>{
       //TODO: fazer fim de jogo
       this.gameController.reset();
-      // setTimeout(()=>this.socket.emit('game-start'), 200)
     })
 
     this.socket.on("jump", (data)=>{
@@ -46,12 +44,25 @@ class SocketsController{
 
     this.socket.on("sync-game", (data)=>{
       data.objects.forEach((obj)=>{
-        this.gameController.objects.updateObj(
-          obj.id,
-          obj.position,
-          obj.vel,
-          obj.accel
-        )
+        try{
+          this.gameController.objects.updateObj(
+            obj.id,
+            obj.position,
+            obj.vel,
+            obj.accel
+          )
+        }
+        catch(e){
+          this.gameController.createObject(
+            obj.symbol, 
+            obj.position, 
+            obj.vel,
+            obj.accel,
+            obj.id,
+            obj.width,
+            obj.height
+          )
+        }
       })
       this.gameController.time = data.time;
     })

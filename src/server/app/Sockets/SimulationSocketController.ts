@@ -10,6 +10,7 @@ export default class SimulationSocketsController{
   // Vel functions
   private simulation_rate: number;
   private update_rate: number;
+  private auto_restart: boolean;
 
   // Timers
   private timers:{
@@ -29,9 +30,10 @@ export default class SimulationSocketsController{
     //* Customizable variables
     this.simulation_rate = 60;
     this.update_rate = 20;
+    this.auto_restart = false;
   }
 
-  initConnectionsHandler(): void{
+  initConnectionsHandler(createEvents = (socket:Socket.Socket) => {}): void{
     this.io.sockets.on('connection', (socket)=>{
 
       console.log('Socket connection '+ socket.id);
@@ -52,29 +54,37 @@ export default class SimulationSocketsController{
 
       socket.on('game-start', () => {
         if(!this.simulationController.simulation_running){
-          this.io.sockets.emit('game-start', {
-            world:{
-              width: this.simulationController.world.width,
-              height: this.simulationController.world.height
-            }
-          })
-          let ids = this.connections.map(v=> v.id)
-          this.simulationController.simulationSetup(ids);
-
-          this.timers.simulation = setInterval(
-            this.runSimulation,
-            1000/this.simulation_rate
-          )
-
-          this.timers.sync = setInterval(
-            this.syncClients,
-            1000/this.update_rate
-          )
-
+          this.startSimulation();
         }
       })
 
+      socket.on('toggle-auto-restart', () => {
+        this.auto_restart = !this.auto_restart;
+      })
+
+      createEvents(socket)
     })
+  }
+
+  protected startSimulation(){
+    this.io.sockets.emit('game-start', {
+      world:{
+        width: this.simulationController.world.width,
+        height: this.simulationController.world.height
+      }
+    })
+    let ids = this.connections.map(v=> v.id)
+    this.simulationController.simulationSetup(ids);
+
+    this.timers.simulation = setInterval(
+      this.runSimulation,
+      1000/this.simulation_rate
+    )
+
+    this.timers.sync = setInterval(
+      this.syncClients,
+      1000/this.update_rate
+    )
   }
 
   protected removeSocket(id){
@@ -94,6 +104,8 @@ export default class SimulationSocketsController{
 
       this.simulationController.reset();
       this.io.sockets.emit('game-end');
+      
+      if(this.auto_restart) this.startSimulation();
     }
 
     //** Handling time **//
@@ -114,7 +126,7 @@ export default class SimulationSocketsController{
       this.simulationController.resetDeletedBuffer();
     }
 
-    //* handling deleted created objs
+    //* handling created objs
     if(this.simulationController.objController.buffer.createdObjs.length != 0 ){
       let values =  this.simulationController.objController.buffer.createdObjs.reduce((acc, curr)=>{
         acc.push(curr.getValues())
