@@ -10,6 +10,7 @@ class SocketsController{
     this.socket = io();
 
     this.socket.on("game-start", (data)=>{
+      resizeCanvas(data.world.width, data.world.height)
       this.gameController.menu.initGame();
     })
 
