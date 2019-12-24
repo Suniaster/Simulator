@@ -1,6 +1,5 @@
-
-class Menu{
-  constructor(){
+class Menu {
+  constructor() {
     this.gameRunning = false;
     this.socket = null;
 
@@ -8,7 +7,7 @@ class Menu{
     this.restartButton = undefined;
   }
 
-  drawMenu(){
+  drawMenu() {
     this.startbutton = createButton('Start Game');
     this.startbutton.position(19, 19);
     this.startbutton.mousePressed(this.startGameEvent);
@@ -18,26 +17,25 @@ class Menu{
     this.restartButton.mousePressed(this.toggleRestart);
   }
 
-  initGame(){
+  initGame() {
     this.gameRunning = true;
-    this.startbutton.remove()
+    this.startbutton.remove();
   }
 
-  startGameEvent = () =>{
-    if(this.socket != null){
+  startGameEvent = () => {
+    if (this.socket != null) {
       this.socket.emit('game-start');
     }
-  }
+  };
 
-  toggleRestart = () =>{
-    if(this.socket != null){
+  toggleRestart = () => {
+    if (this.socket != null) {
       this.socket.emit('toggle-auto-restart');
     }
-  }
-
+  };
 
   //** Sockets **//
-  registerSocket(socket){
+  registerSocket(socket) {
     this.socket = socket;
   }
 }
