@@ -1,5 +1,3 @@
-
-
 let game = new GameWindow();
 let socketControl = new SocketsController(game);
 
@@ -14,32 +12,22 @@ function setup() {
   let canv = createCanvas(game.size.x, game.size.y);
   canv.position(0, 0);
   frameRate(60);
-
-  game.createFlappy(socketControl.socket.id)
-  game.setup()
+  // game.createFlappy(socketControl.socket.id)
+  game.setup();
   game.menu.drawMenu();
 }
 
 function draw() {
-  background(game.imgControl.getImage('bg'));
+  // background(game.imgControl.getImage('bg'));
+  background(200);
   game.drawFPS();
-  
-  if(game.menu.gameRunning){
-    game.objects.moveAndDrawAllObjs()
-    game.time += 1
-  } 
+
+  if (game.menu.gameRunning) {
+    game.objects.moveAndDrawAllObjs();
+    game.time += 1;
+  }
 }
 
-function keyPressed(){
-  switch(keyCode){
-    case 87: // W
-      socketControl.socket.emit('key-press', keyCode)
-      break;
-    case 68: // D
-      break;
-    case 65: // A
-      break;
-    case 32: // Space
-      break; 
-  }
+function keyPressed() {
+  socketControl.socket.emit('key-press', keyCode);
 }
