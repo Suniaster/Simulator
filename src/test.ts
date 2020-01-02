@@ -1,5 +1,4 @@
-
-import { Circle, Polygon, Result } from 'detect-collisions'
+import { Circle, Polygon, Result } from 'detect-collisions';
 const circle = new Circle(45, 45, 20);
 const polygon = new Polygon(50, 50, [
   [0, 0],
@@ -7,4 +6,3 @@ const polygon = new Polygon(50, 50, [
   [-10, 10],
 ]);
 const result = new Result();
-

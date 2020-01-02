@@ -1,28 +1,27 @@
-import { Polygon } from "detect-collisions";
+import { Polygon } from 'detect-collisions';
 
-export default abstract class AbstractThing extends Polygon{
-
+export default abstract class AbstractThing extends Polygon {
   static gravity = 1;
 
-  public velocity:Vector;
+  public velocity: Vector;
   public accel: Vector;
-  public symbol:string;
+  public symbol: string;
 
-  constructor(public position:Vector, public width, public height, public id:string, points?:number[][]){
+  constructor(public position: Vector, public width, public height, public id: string, points?: number[][]) {
     super(position.x, position.y, points);
   }
-  
+
   static makeid(length) {
-    var result           = '';
-    var characters       = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    var result = '';
+    var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
     var charactersLength = characters.length;
-    for ( var i = 0; i < length; i++ ) {
-       result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    for (var i = 0; i < length; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;
   }
 
-  public move(){
+  public move() {
     this.updateVel();
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
@@ -31,34 +30,34 @@ export default abstract class AbstractThing extends Polygon{
     this.y = this.position.y;
   }
 
-  public updateVel(){
+  public updateVel() {
     this.velocity.x += this.accel.x;
     this.velocity.y += this.accel.y;
   }
 
-  public getValues(): ObjectInfoMessage{
+  public getValues(): ObjectInfoMessage {
     return {
-      position:{
+      position: {
         x: this.position.x,
-        y: this.position.y
+        y: this.position.y,
       },
-      vel:{
+      vel: {
         x: this.velocity.x,
-        y: this.velocity.y
+        y: this.velocity.y,
       },
-      accel:{
+      accel: {
         x: this.accel.x,
-        y: this.accel.y
+        y: this.accel.y,
       },
       symbol: this.symbol,
       width: this.width,
       height: this.height,
-      id: this.id
-    }
+      id: this.id,
+    };
   }
 
-  public jump():AbstractThing{
-    this.velocity.y = -15
-    return this
+  public jump(): AbstractThing {
+    this.velocity.y = -15;
+    return this;
   }
 }

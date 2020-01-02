@@ -68,15 +68,18 @@ export default class FlappyGame extends AbstractSimulationController {
 
   protected performCollisions() {
     this.objController.collisionSystem.update();
-    this.objController.forEach((obj:AbstractThing)=>{
-      let potentials:any = obj.potentials();
-      for(const otherObject of potentials) {
-        if(obj.symbol === 'Flappy')
-          if(otherObject.symbol === 'Wall')
-            if(obj.collides(otherObject))
+    this.objController.forEach((obj: AbstractThing) => {
+      let potentials: any = obj.potentials();
+      for (const otherObject of potentials) {
+        if (obj.symbol === 'Flappy') {
+          if (otherObject.symbol === 'Wall') {
+            if (obj.collides(otherObject)) {
               this.objController.delete(obj.id);
+            }
+          }
+        }
       }
-    })
+    });
   }
 
   private createWall(vel_x: number = -2) {
