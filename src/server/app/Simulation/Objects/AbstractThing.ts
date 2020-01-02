@@ -1,4 +1,6 @@
-export default abstract class AbstractThing{
+import { Polygon } from "detect-collisions";
+
+export default abstract class AbstractThing extends Polygon{
 
   static gravity = 1;
 
@@ -6,7 +8,8 @@ export default abstract class AbstractThing{
   public accel: Vector;
   public symbol:string;
 
-  constructor(public position:Vector, public width, public height, public id:string){
+  constructor(public position:Vector, public width, public height, public id:string, points?:number[][]){
+    super(position.x, position.y, points);
   }
   
   static makeid(length) {
@@ -23,6 +26,9 @@ export default abstract class AbstractThing{
     this.updateVel();
     this.position.x += this.velocity.x;
     this.position.y += this.velocity.y;
+
+    this.x = this.position.x;
+    this.y = this.position.y;
   }
 
   public updateVel(){

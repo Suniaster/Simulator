@@ -1,14 +1,15 @@
 import AbstractThing from './AbstractThing';
 import CollisionController from './Collision/CollisionController';
 import Wall from './GameObjects/Wall';
+import { Collisions } from 'detect-collisions';
 
 export default class ObjectController {
   objects: { [id: string]: AbstractThing };
-
   buffer: {
     createdObjs: AbstractThing[];
     deletedIds: String[];
   };
+  collisionSystem: Collisions;
 
   constructor() {
     this.objects = {};
@@ -16,18 +17,21 @@ export default class ObjectController {
       createdObjs: [],
       deletedIds: [],
     };
+    this.collisionSystem = new Collisions();
   }
 
   //* Load/Unload
   register(id: string, obj: AbstractThing): AbstractThing {
     this.objects[id] = obj;
     this.buffer.createdObjs.push(obj);
+    this.collisionSystem.insert(obj);
     return obj;
   }
 
   registerWithObjId(obj: AbstractThing) {
     this.objects[obj.id] = obj;
     this.buffer.createdObjs.push(obj);
+    this.collisionSystem.insert(obj);
     return obj;
   }
 
@@ -35,6 +39,7 @@ export default class ObjectController {
     let copy = this.objects[id];
     delete this.objects[id];
     this.buffer.deletedIds.push(id);
+    this.collisionSystem.remove(copy);
     return copy;
   }
 
@@ -44,6 +49,7 @@ export default class ObjectController {
       createdObjs: [],
       deletedIds: [],
     };
+    this.collisionSystem = new Collisions();
   }
 
   //* Getters
@@ -122,7 +128,7 @@ export default class ObjectController {
     else return new Wall({ x: 5000, y: 400 }, 50, 50);
   }
 
-  forEach(f: (arg1: AbstractThing) => {}) {
+  forEach(f: (arg1: AbstractThing) => void) {
     Object.values(this.objects).forEach(val => {
       f(val);
     });

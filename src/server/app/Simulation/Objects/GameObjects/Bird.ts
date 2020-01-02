@@ -9,7 +9,9 @@ export default class Bird extends AbstractThing {
   alive: boolean;
 
   constructor(public position: Vector, public width, public height, public id: string = Bird.makeid(10)) {
-    super(position, width, height, id);
+    super(position, width, height, id, [
+      [0,0],[width, 0],[width,height], [0 ,height]
+    ]);
 
     this.velocity = {
       x: 0,
