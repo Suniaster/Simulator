@@ -36,7 +36,6 @@ export default abstract class AbstractSimulationController {
   public abstract reset();
   public abstract simulationSetup(connected_ids: string[]);
   public abstract handleKey(connection_id: string, key: string);
-  protected abstract performCollisions();
 
   public getObjectsPositionValues(): ObjectInfoMessage[] {
     return this.objController.getObjValues();

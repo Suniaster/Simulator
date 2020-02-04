@@ -109,6 +109,18 @@ export default class ObjectController {
     }, []);
   }
 
+  performCollisions(){
+    this.collisionSystem.update();
+    this.forEach((obj: AbstractThing) =>{
+      let potentials: any = obj.potentials();
+      for (const otherObject of potentials) {
+        if(obj.collisionList.isInList(otherObject.symbol)){
+          this.delete(obj.id);
+        }
+      }
+    })
+  }
+
   /**
    *  @description WIP - Pega objeto com a menor distancia em algum eixo
    * @param obj - objeto base

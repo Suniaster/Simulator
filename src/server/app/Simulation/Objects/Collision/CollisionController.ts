@@ -1,6 +1,19 @@
 import AbstractThing from '../AbstractThing';
 
 export default class CollisionController {
+
+  destroyedByList:string[]
+  constructor(){
+    this.destroyedByList = []
+  }
+
+  isInList(str: string): boolean{
+    return this.destroyedByList.includes(str);
+  }
+
+  add(will_collide: string){
+    this.destroyedByList.push(will_collide)
+  }
   static rectCollision(rect1: AbstractThing, rect2: AbstractThing): boolean {
     // let AX1 = rect1.position.x;
     // let AX2 = (rect1.position.x + rect1.width);

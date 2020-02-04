@@ -28,6 +28,8 @@ export default class Bird extends AbstractThing {
 
     this.symbol = 'Flappy';
 
+    this.collisionList.add("Wall")
+
     this.brain = new Perceptron(4, [3, 2], 1);
     this.limit = 0.5;
     this.alive = true;
