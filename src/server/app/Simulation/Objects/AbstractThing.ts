@@ -1,5 +1,5 @@
 import { Polygon } from 'detect-collisions';
-import CollisionController from './Collision/CollisionController';
+import ObjectController from './ObjectsController';
 
 export default abstract class AbstractThing extends Polygon {
   static gravity = 1;
@@ -7,11 +7,9 @@ export default abstract class AbstractThing extends Polygon {
   public velocity: Vector;
   public accel: Vector;
   public symbol: string;
-  public collisionList: CollisionController;
 
   constructor(public position: Vector, public width, public height, public id: string, points?: number[][]) {
     super(position.x, position.y, points);
-    this.collisionList = new CollisionController();
   }
 
   static makeid(length) {
@@ -63,4 +61,6 @@ export default abstract class AbstractThing extends Polygon {
     this.velocity.y = -15;
     return this;
   }
+
+  public abstract colidedWith(obj: AbstractThing, world:ObjectController);
 }

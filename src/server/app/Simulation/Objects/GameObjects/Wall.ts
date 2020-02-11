@@ -1,4 +1,5 @@
 import AbstractThing from '../AbstractThing';
+import ObjectController from '../ObjectsController';
 
 export default class Wall extends AbstractThing {
   constructor(position: Vector, width, height, id: string = Wall.makeid(10)) {
@@ -34,4 +35,6 @@ export default class Wall extends AbstractThing {
     L = Math.floor(L);
     return L;
   }
+
+  public colidedWith(obj:AbstractThing, world: ObjectController){}
 }

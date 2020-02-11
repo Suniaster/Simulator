@@ -1,5 +1,4 @@
 import AbstractThing from './AbstractThing';
-import CollisionController from './Collision/CollisionController';
 import Wall from './GameObjects/Wall';
 import { Collisions } from 'detect-collisions';
 
@@ -73,19 +72,7 @@ export default class ObjectController {
   getObjThatIdStartsWith(some_string: string): AbstractThing[] {
     return Object.values(this.objects).filter(v => v.id.startsWith(some_string));
   }
-
-  getCollisions(): [AbstractThing, AbstractThing][] {
-    let collisionList = [];
-    let keys = Object.keys(this.objects);
-    for (let i = 0; i < keys.length; i += 1) {
-      for (let j = i + 1; j < keys.length; j += 1) {
-        if (CollisionController.rectCollision(this.objects[keys[i]], this.objects[keys[j]]))
-          collisionList.push([this.objects[keys[i]], this.objects[keys[j]]]);
-      }
-    }
-    return collisionList;
-  }
-
+  
   //* Logic operations
   /**
    *
@@ -114,9 +101,7 @@ export default class ObjectController {
     this.forEach((obj: AbstractThing) =>{
       let potentials: any = obj.potentials();
       for (const otherObject of potentials) {
-        if(obj.collisionList.isInList(otherObject.symbol)){
-          this.delete(obj.id);
-        }
+        obj.colidedWith(otherObject, this);
       }
     })
   }

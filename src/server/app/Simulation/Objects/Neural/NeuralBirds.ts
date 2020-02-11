@@ -1,5 +1,7 @@
 import Perceptron from '../../../../networks/Perceptron';
 import NeuralObject from './NeuralObject';
+import AbstractThing from '../AbstractThing';
+import ObjectController from '../ObjectsController';
 
 export default class NeuralBird extends NeuralObject {
   /** Neural Net variables */
@@ -19,6 +21,7 @@ export default class NeuralBird extends NeuralObject {
     };
 
     this.symbol = 'Flappy';
+
     this.brain = new Perceptron(4, [3, 2], 1);
   }
 
@@ -33,4 +36,11 @@ export default class NeuralBird extends NeuralObject {
       this.jump();
     });
   }
+
+  public colidedWith(obj:AbstractThing, world: ObjectController){
+    if(obj.symbol == 'Wall'){
+      world.delete(this.id);
+    }
+  }
+
 }

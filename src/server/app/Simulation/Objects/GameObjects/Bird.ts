@@ -1,5 +1,6 @@
 import AbstractThing from '../AbstractThing';
 import Perceptron from '../../../../networks/Perceptron';
+import ObjectController from '../ObjectsController';
 
 export default class Bird extends AbstractThing {
   /** Neural Net variables */
@@ -28,8 +29,6 @@ export default class Bird extends AbstractThing {
 
     this.symbol = 'Flappy';
 
-    this.collisionList.add("Wall")
-
     this.brain = new Perceptron(4, [3, 2], 1);
     this.limit = 0.5;
     this.alive = true;
@@ -47,5 +46,11 @@ export default class Bird extends AbstractThing {
 
     if (predict[0] > this.limit) return true;
     else return false;
+  }
+
+  public colidedWith(obj:AbstractThing, world: ObjectController){
+    if(obj.symbol == 'Wall'){
+      world.delete(this.id);
+    }
   }
 }

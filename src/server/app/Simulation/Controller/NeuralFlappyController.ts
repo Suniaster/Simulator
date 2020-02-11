@@ -34,7 +34,7 @@ export default class NeuralFlappyController extends AbstractSimulationController
       this.createWall();
     }
 
-    this.performCollisions();
+    this.objController.performCollisions();
 
     this.geneticController.checkKilledObjects(this.time);
     this.geneticController.makeObjsPerform();
@@ -43,17 +43,6 @@ export default class NeuralFlappyController extends AbstractSimulationController
 
     this.time += 1;
     return this.simulation_running;
-  }
-
-  performCollisions() {
-    let cols = this.objController.getCollisions();
-
-    cols.forEach(now => {
-      if (now[0].symbol != now[1].symbol) {
-        if (now[0].symbol == 'Flappy') this.objController.delete(now[0].id);
-        if (now[1].symbol == 'Flappy') this.objController.delete(now[1].id);
-      }
-    });
   }
 
   private createWall(vel_x: number = -2) {
