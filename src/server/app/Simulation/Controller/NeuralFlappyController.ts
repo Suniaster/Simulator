@@ -15,7 +15,11 @@ export default class NeuralFlappyController extends AbstractSimulationController
     this.wallSpawnTime = 160;
   }
 
-  public handleKey(connection_id: string, key: string) {
+  public handleKey(connection_id: string, key) {
+    if( key === 81 ) //* Q
+      this.objController.timeScale *= 1.5
+    if( key === 69 ) //* E
+      this.objController.timeScale /= 1.5
     return;
   }
 

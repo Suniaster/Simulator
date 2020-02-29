@@ -22,18 +22,18 @@ export default abstract class AbstractThing extends Polygon {
     return result;
   }
 
-  public move() {
-    this.updateVel();
-    this.position.x += this.velocity.x;
-    this.position.y += this.velocity.y;
+  public move(timeScale:number=1) {
+    this.updateVel(timeScale);
+    this.position.x += this.velocity.x*timeScale;
+    this.position.y += this.velocity.y*timeScale;
 
     this.x = this.position.x;
     this.y = this.position.y;
   }
 
-  public updateVel() {
-    this.velocity.x += this.accel.x;
-    this.velocity.y += this.accel.y;
+  public updateVel(timeScale:number=1) {
+    this.velocity.x += this.accel.x*timeScale;
+    this.velocity.y += this.accel.y*timeScale;
   }
 
   public getValues(): ObjectInfoMessage {

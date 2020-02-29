@@ -10,6 +10,7 @@ export default class ObjectController {
   };
   collisionSystem: Collisions;
 
+  timeScale:number
   constructor() {
     this.objects = {};
     this.buffer = {
@@ -17,6 +18,8 @@ export default class ObjectController {
       deletedIds: [],
     };
     this.collisionSystem = new Collisions();
+
+    this.timeScale = 1;
   }
 
   //* Load/Unload
@@ -82,7 +85,7 @@ export default class ObjectController {
    */
   moveAllObjs(max_pos: Vector = { x: 1000000, y: 1000000 }, min_pos: Vector = { x: 0, y: 0 }): String[] {
     return Object.values(this.objects).reduce((acc, obj) => {
-      obj.move();
+      obj.move(this.timeScale);
       if (
         obj.position.x < min_pos.x ||
         obj.position.x > max_pos.x ||

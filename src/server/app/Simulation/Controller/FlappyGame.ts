@@ -25,6 +25,8 @@ export default class FlappyGame extends AbstractSimulationController {
       if (key === 87)
         //* W
         this.objController.getById(id).jump();
+      if( key === 81) //* Q
+        this.objController.timeScale *= 1.5
     }
   }
 
