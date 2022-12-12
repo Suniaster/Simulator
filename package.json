@@ -16,7 +16,7 @@
     "@types/synaptic": "^1.0.3",
     "canvas": "^2.6.0",
     "detect-collisions": "^2.4.4",
-    "express": "^4.17.1",
+    "express": "^4.17.3",
     "readline-sync": "^1.4.10",
     "socket.io": "^2.3.0",
     "synaptic": "^1.1.4"
